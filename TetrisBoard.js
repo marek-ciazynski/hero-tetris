@@ -9,6 +9,7 @@ export default class TetrisBoard {
 	constructor(canvas, sizeX, sizeY) {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext('2d');
+		this.gameOver = false;
 
 		// board
 		this.sizeX = sizeX;
@@ -54,7 +55,14 @@ export default class TetrisBoard {
 	}
 
 	update() {
+		if (this.gameOver) return false;
+
 		if (this._checkCollision(this.currentBlock, 1)) {
+			if (this.currentBlock.y === 0 && this.gameOver === false) {
+				this.gameOver = true;
+				alert('Game over!');
+			}
+
 			this._applyBlock(this.currentBlock);
 			this.currentBlock = this._nextBlock();
 		} else {
