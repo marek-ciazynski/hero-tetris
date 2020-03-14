@@ -36,3 +36,28 @@ body {
 	height: 100%;
 	margin: 1em;
 }
+
+#game-over {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: #000c;
+	
+	opacity: 0;
+	transition: opacity 0.4s ease;
+}
+
+#game-over h1 {
+	text-align: center;
+	color: #fff;
+	position: relative;
+	top: 40%;
+    background: #000;
+    padding: 2rem;
+}
+
+#game-over.over {
+	opacity: 1;
+}

@@ -60,7 +60,8 @@ export default class TetrisBoard {
 		if (this._checkCollision(this.currentBlock, 1)) {
 			if (this.currentBlock.y === 0 && this.gameOver === false) {
 				this.gameOver = true;
-				alert('Game over!');
+				console.log('Game over!');
+				document.getElementById('game-over').classList.add('over');
 			}
 
 			this._applyBlock(this.currentBlock);
@@ -111,7 +112,7 @@ export default class TetrisBoard {
 		return {
 			type: this._randomKeyFromObject(Blocks),
 			color: this._randomKeyFromObject(Colors),
-			x: Math.floor(this.sizeX / 2) - 2,
+			x: Math.floor(this.sizeX / 2) - 1,
 			y: 0
 		}
 	}
@@ -129,6 +130,10 @@ export default class TetrisBoard {
 				}
 			})
 		);
+	}
+
+	_removeFullLines() {
+
 	}
 
 	_applyBlock(block) {
