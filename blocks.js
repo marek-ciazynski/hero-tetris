@@ -12,9 +12,9 @@ export const Colors = {
 
 export const Blocks = {
 	i: [
-		' X',
-		' X',
-		' X',
+		'X',
+		'X',
+		'X',
 	],
 
 	j: [

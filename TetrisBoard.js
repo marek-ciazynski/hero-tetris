@@ -4,17 +4,6 @@ import { Blocks, Colors } from './blocks';
 
 console.log('TETRIS')
 
-const Actions = {
-	LEFT: 0,
-	RIGHT: 1,
-	DROP: 2
-}
-
-
-/* TODO remove */
-window.Blocks = Blocks;
-window.Colors = Colors;
-/***/
 
 export default class TetrisBoard {
 	constructor(canvas, sizeX, sizeY) {
@@ -26,34 +15,39 @@ export default class TetrisBoard {
 		this.sizeY = sizeY;
 		this.board = [...Array(sizeY)].map(e => Array(sizeX));
 
-		/* TODO remove */
-		// this.board[6][3] = Colors[0];
-		// console.log(this.board)
-
 		// current block
 		this.currentBlock = this._nextBlock();
 		console.log('initial block:', this.currentBlock)
 	}
 
 	handleInput(event) {
-		const keyBinding = {
-			'a': Actions.LEFT,
-			'ArrowLeft': Actions.LEFT,
+		switch (event.key) {
+			case 'a':
+			case 'ArrowLeft':
+				if (this.currentBlock.x > 0)
+					this.currentBlock.x -= 1;
+				break;
 
-			'd': Actions.RIGHT,
-			'ArrowRight': Actions.RIGHT,
+			case 'd':
+			case 'ArrowRight':
+				if (this.currentBlock.x < this.sizeX - Blocks[this.currentBlock.type][0].length)
+					this.currentBlock.x += 1;
+				break;
 
-			's': Actions.DROP,
-			'ArrowDown': Actions.DROP,
-		};
+			// case 's':  // never mind xD
+			// case 'ArrowDown':
 
-		const action = keyBinding[event.key];
-		if (action !== undefined) {
-			if (action === Actions.DROP) {
-				this._fastDrop(this.currentBlock);
-			} else {
-				this._rotate(!!action);
-			}
+			// 	break;
+
+			case 'q':
+			case 'PageUp':
+				this._rotate(false);
+				break;
+
+			case 'e':
+			case 'PageDown':
+				this._rotate(true);
+				break;
 		}
 
 		this.update();
