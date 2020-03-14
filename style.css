@@ -16,9 +16,10 @@ body {
 	image-rendering: pixelated;
 
 	display: inline-block;
-	border: 3px solid #ccc;
-	margin: 1.5rem;
-	box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+	--pixel-size: 30px;
+	border: var(--pixel-size) solid #666;
+	outline: var(--pixel-size) solid #eee;
+	margin: calc(2 * var(--pixel-size) - 7px);
 }
 
 /* ID elements */
