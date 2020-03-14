@@ -9,12 +9,14 @@ export default class TetrisBoard {
 	constructor(canvas, sizeX, sizeY) {
 		this.canvas = canvas;
 		this.ctx = canvas.getContext('2d');
+
+		this.points = 0;
 		this.gameOver = false;
 
 		// board
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
-		this.board = [...Array(sizeY)].map(e => Array(sizeX));
+		this.board = [...Array(sizeY)].map(e => Array(sizeX).fill(null));
 
 		// current block
 		this.currentBlock = this._nextBlock();
@@ -65,6 +67,7 @@ export default class TetrisBoard {
 			}
 
 			this._applyBlock(this.currentBlock);
+			this.points += this._removeFullLines();
 			this.currentBlock = this._nextBlock();
 		} else {
 			this.currentBlock.y += 1;
@@ -126,14 +129,24 @@ export default class TetrisBoard {
 			Array.from(row).some((point, x) => {
 				if (point !== ' ') {
 					const matchingField = this.board[block.y + y + offsetY][block.x + x];
-					return matchingField !== undefined;
+					return matchingField !== null;
 				}
 			})
 		);
 	}
 
 	_removeFullLines() {
-
+		let lines = 0;
+		this.board.forEach((row, y) => {
+			console.log(row)
+			const isFull = row.every(field => field !== null);
+			if (isFull) {
+				lines += 1;
+				this.board.splice(y, 1);
+				this.board.unshift(Array(this.sizeX));
+			}
+		});
+		return lines;
 	}
 
 	_applyBlock(block) {
